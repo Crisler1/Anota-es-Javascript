@@ -128,4 +128,35 @@ alert(car?.motor.valves.anything); // undefined
 
 ----------------------------------------------------------------------------------------------
 
+## Condicionais:
 
+* Condicional _if_ comparando multiplos critérios
+```javascript
+const fruit = 'strawberry';
+
+// Criamos um array com aqueles critérios para compara-los
+const criteria = ['apple', 'strawberry', 'cranberries'];
+
+if (criteria.include(fruit)) {
+  // true
+}
+```
+
+-------------------------------------------------------------------------------------------
+
+# Funções, parâmetros e argumentos:
+
+* Parâmetros vs argumentos. Um  parâmetro é uma variável na declaração da função. Um parâmetro é o valor que é passado 
+em uma função no momento dela ser chamada.
+```javascript
+function sayHi(name) { // 👈 parâmetro
+}
+
+sayHi('samantha'): // 👈 argumento
+```
+
+* _arguments_ (array de argumentos que podem ser passados a uma função):
+```javascript
+function printArgumentES6(...arg){
+  arg.
+}
