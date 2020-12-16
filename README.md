@@ -105,6 +105,27 @@ undefined ?? 'default' // 'default'
 undefined ?? null // null
 null ?? undefined // undefined
 ```
-* Operador de encadeamento opcional (optional chaining operator(.?)):
+* Operador de encadeamento opcional (optional chaining operator(?.)):
+```javascript
+// Node.js 14 required (ES2020)
+const object = {id: 123, names:{first: 'Alice', last: 'Smith'}};
+const firstName = object?.names?.first; // 'Alice'
+const home = object?.adress?.home; // undefined
+
+// Em combinação com nullish coalescing operator: 
+const middleName = object?.names?.middle ?? '(no middle name)'; // '(no middle name)'
+
+const user = {};
+alert(user.address.street); // Error!
+alert(user && user.address && user.address.street ); // undefined (no error)
+alert( user?.address?.street); // undefined (no error)
+
+
+// A avaliação para imediatamente after: car ?.
+const car = null;
+alert(car?.motor.valves.anything); // undefined
+```
+
+----------------------------------------------------------------------------------------------
 
 
