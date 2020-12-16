@@ -13,10 +13,10 @@
 - [Singleton (ES6 classe)](#singleton-es6-classe)
 - [Tratamento de Arrays](#tratamento-de-arrays)
 - [Tratamento de Strings](#tratamento-de-strings)
-- [Éxpressões Regulares](#expressões-regulares)
+- [Expressões Regulares](#expressões-regulares)
 - [Objetos](#objetos)
 - [Namespaces](#namespaces)
-- [Closurea](#closures)
+- [Closures](#closures)
 - [Proxies](#proxies)
 - [Set](#set)
 - [Map](#map)
@@ -32,3 +32,26 @@
 ## Versões do Javascript
 
 ![js_version.png](./assets/js_version.png)
+
+## **Compatibilidade com NodeJS**
+[https://node.green](https://node.green)
+
+------------------------------------------------
+
+## Declaração de Variáveis
+
+* Declarar multiváriaveis de maneira mais compacta
+```javascript
+var i, j, k;
+var l = m = n = 0;
+var a = 1, b = 2;
+```
+--------------------------------------------------
+
+## Operadores:
+
+* O operador lógico _OR_ (avalia da esquerda para a direita as expressões e retorna a primeira delas como "truthy".
+Se todas forem avaliadas como "falsy", retorna _false_. Todos os valores são "truthy" exceto: _false_, _0_ _""_, _null_,
+_undefined_, e _NAN_)
+```javascript
+var foo = false || '🙂'; // '🙂' 
