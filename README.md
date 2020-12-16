@@ -3,7 +3,7 @@
   Lista pessoal de anotações e truques 
 
   ## Tabela de Conteúdo
-- [Versões do Javascript](#versões-do javascript)
+- [Versões do Javascript](#versões-do-javascript)
 - [Declaração de variáveis](#declaração-de-variáveis)
 - [Operadores](#operadores)
 - [Condicionais](#condicionais)
