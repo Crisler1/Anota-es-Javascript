@@ -158,5 +158,24 @@ sayHi('samantha'): // 👈 argumento
 * _arguments_ (array de argumentos que podem ser passados a uma função):
 ```javascript
 function printArgumentES6(...arg){
-  arg.
+  arg.forEach((a) => console.log(a));
+}
+printArgumentsES6() {
+  for(let argument of arguments) {
+    console.log(argument);
+  }
+}
+printArgumentsES6ForOf(3712,7123);
+
+function food(...arg){
+  const [egg, cheese] = args;
+}
+
+food'🥚', '🧀');
+```
+* Uso de destructuring para melhorar a legibilidade do significado dos parâmetros que mandamos em uma função:
+```javascript
+function createMenu({title, body, buttonText, denyable= false}){
+  // ...
+  // Sem embargo, 
 }
