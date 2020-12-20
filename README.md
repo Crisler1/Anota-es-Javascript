@@ -307,3 +307,163 @@ const dataConnection = (data = {}) => {
     }
   });
 } 
+
+const connection = dataConnection({ ip: '127.0.0.1', port: '8080'});
+
+
+console.log(connection.getSettings());
+console.log(connection.getSettings().ip);
+
+connection.method = 'http';
+
+
+
+
+
+connection.modifySettings({ method: 'http'});
+
+console.log(connection.getSettings());
+
+connection.modifySettings({ip: '192.168.2.11'});
+
+console.log(connection.getSettings());
+```
+
+---------------------------------------------------
+
+## Classes em ES6
+
+* Exemplo de classes em ES6:
+```javascript
+class Person {
+  constructor(name) {
+
+    this.name = name;
+  }
+
+  greeting() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+
+let john_doe = new Person("John Doe");
+
+john_doe.greeting();
+
+console.log(john_doe instanceof Person);
+console.log(john_doe instanceof Object);
+
+console.log( typeof john_doe);
+
+console.log( typeof Person);
+
+console.log( typeof Person.prototype.greeting);
+
+```
+
+* Exemplo de Chaining Methods (métodos encadeados):
+```javascript
+class Car {
+  constructor(brand, model, color) {
+    this.brand = brand;
+    this.model = model;
+    this.color = color;
+  }
+
+  setBrand(brand){
+    this.brand = brand;
+    return this;
+  }
+  setModel(model){
+    this.model = model;
+    return this;
+  }
+  setColor(color){
+    this.color = color;
+    return this;
+  }
+
+  getCarInfo(){
+    return this;
+  }
+}
+
+const car = new Car('Ford', 'F-150','red').setColor('blue').setModel('Ranger');
+
+console.log( car.getCarInfo());
+```
+
+* Métodos estáticos (nos permite usar esses métodos sem gerar a instância da classe):
+```javascript
+class Utilities {
+  static generateRandomInteger() {
+    // Isto permite um método estático.
+    // Permite se chamado sem necessidade de instanciar a classe.
+  return Math.floor(Math.random() * 11); // retorna número inteiro aleátorio entre 0 e 10
+  }
+
+  static coinToss(){
+    return Math.random() > .5; // Retorna 'true' ou 'false' de maneira aleátoria
+    }
+  static capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1); // retorna uma string colocando a primeira letra maiúscula
+  }
+
+  static delay(miliseconds, callback){
+    setTimeout(callback, miliseconds);
+  }
+
+  static delay(miliseconds, callback){
+    setTimeout(callback, miliseconds);
+  }
+
+  static pause(miliseconds) {
+    const start = Date.now();
+    let now = start;
+    while(now - start < miliseconds) {
+      now = Date.now();
+    }
+  }
+
+  static wait(timeout){
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+  static generateToken(){
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-$';
+    let rand, i;
+    let bits = 64;
+    let result = '';
+    while (bits > 0){
+      rand = Math.floor(Math.random() * 0x100000000); // 32-bit integer
+      // base 64 means 6 bits per character, so we use the top 30 bits from rand to give 30/6=5 characters.
+      for (i = 26; i > 0 && bits > 0; i -= 6, bits -= 6) result += chars[0x3f & rand >>> i];
+    }
+    return result;
+  }
+}
+
+let num = Utilitie.generateRandomInteger();
+console.log(num); // 2
+
+console.log(Utilities.coinToss()); // true | false
+
+console.log(Utilities.capitalize('batman')); // 'Batman'
+
+Utilities.delay(3000, function (){
+  return console.log('delayed output');
+}); // 'delayed output', três segundos depois
+
+Utilities.generateToken(); // 'DyvlJ_mhQ8X'
+
+Utilities.pause(2000); // Stop the execution of javascipt for the specified time
+
+// wait() example:
+Utilities.wait(5000).then(()=> doSomething());
+
+// or even....
+await Utilities.wait(5000);
+doSomething();
+```
+* Herança
+```javascript
