@@ -177,5 +177,133 @@ food'🥚', '🧀');
 ```javascript
 function createMenu({title, body, buttonText, denyable= false}){
   // ...
-  // Sem embargo, 
+  // Observe que estabelecemos um valor default para o argumento "cancellable", 
 }
+
+createMenu({
+  title: 'my title',
+  body: 'my body',
+  buttonText: 'send form',
+  cancellable: true
+});
+
+
+function createUser({username = 'Anonymous'} = {}) {
+
+};
+
+
+createUser();
+
+
+
+```
+
+
+* Self Invoking Functions, tambêm chamadas IIFE (Immediately Function Expression):
+```javascript
+var hello;
+(function(){
+
+  hello = function(){
+    return "Hi boy!";
+  };
+})();
+
+console.log(hello() );
+
+var result = (function(){
+  var name = "Barry";
+  return name;
+})();
+
+console.log(result);
+
+```
+
+
+* Factory Functions (Uma "Factory Function" é uma função que cria objetos e os retorna):
+```javascript 
+
+const cat = () => {
+
+  const sound = 'miau',
+  let color = 'white';
+
+  const setColor = (newColor) => {
+    color = newColor;
+  }
+  const getColor = (newColor) => {
+    return color;
+  }
+
+  return {
+    talk: () => sound,
+    setColor, 
+    getColor
+  }
+}
+
+const smurfy = cat();
+console.log( smurfy.talk() );
+
+console.log( smurfy.getColor() );
+smurfy.setColor('black');
+console.log( smurfy.getColor() );
+
+
+
+const makeCounter = function() {
+
+  let _count = 0;
+
+  const changeBy = (val) => {
+    _count += val;
+  }
+
+  return Object.freeze({
+    increment: function(){
+      changeBy(1);
+    },
+    decrement: function(){
+      changeBy(-1);
+    },
+    getValue: function(){
+      return _count;
+    }
+  })
+};
+
+const Counter1 = makeCounter();
+const Counter2 = makeCounter();
+
+console.log(Counter1.getValue());
+
+Counter1.increment();
+Counter2.increment();
+console.log(Counter1.getValue());
+
+Counter1.decrement();
+console.log(Counter1.getValue());
+
+console.log(Counter2.getValue());
+
+```
+
+Outro exemplo de _Factory Functions_ mais avançado:
+```javascript
+
+const dataConnection = (data = {}) => {
+  const settings = data;
+
+  return Object.freeze({
+
+    getSettings: () => settings,
+
+    modifySettings: (addData = {}) => {
+      return Object.assign(settings, addData);
+
+      
+    }
+  });
+} 
