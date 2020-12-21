@@ -185,14 +185,18 @@ createMenu({
   body: 'my body',
   buttonText: 'send form',
   cancellable: true
-});
+}); // Observa que é totalmente compreensivel o significado dos parâmetros. Isto chamamos de 'named paramaters'.
+    // Sem embargo, não teriamos entendido nada se: createMenu('my title', 'my body', 'send form', true);
+    // Saberiamos entender o que significa em true na segunda chamada? Provavelmente não!
 
+    
 
+// Podemos fazer o seguinte se todos os parâmetros forem opcionais:
 function createUser({username = 'Anonymous'} = {}) {
-
+//....
 };
 
-
+// Observa que se nossas funções tambêm retornam objetos, esta usando o padrão RORO (receive object, return object).
 createUser();
 
 
@@ -210,26 +214,28 @@ var hello;
   };
 })();
 
-console.log(hello() );
+console.log(hello() ); // "Hi boy!"
 
 var result = (function(){
   var name = "Barry";
   return name;
 })();
 
-console.log(result);
-
+console.log(result); // O contéudo da variável result é o resultado da execução da função.
+// Neste caso: "Barry"
 ```
 
 
 * Factory Functions (Uma "Factory Function" é uma função que cria objetos e os retorna):
 ```javascript 
-
+// Exemplo de Factory Function
 const cat = () => {
 
   const sound = 'miau',
   let color = 'white';
 
+
+//  definimos getters and setters para acessar as propriedades
   const setColor = (newColor) => {
     color = newColor;
   }
@@ -244,23 +250,27 @@ const cat = () => {
   }
 }
 
-const smurfy = cat();
-console.log( smurfy.talk() );
-
-console.log( smurfy.getColor() );
+const smurfy = cat(); // No deve usar "new"!
+console.log( smurfy.talk() ); // miau
+//console.log( smurfy instanceof cat); // TypeError
+console.log( smurfy.getColor() ); // 'white'
 smurfy.setColor('black');
-console.log( smurfy.getColor() );
+console.log( smurfy.getColor() ); // 'black'
 
 
-
+// Outro exemplo potenciando o uso de "closures"
 const makeCounter = function() {
-
+// Propriedades Privadas
   let _count = 0;
 
+
+// Métodos Privados
   const changeBy = (val) => {
     _count += val;
   }
 
+
+// Definimos os Métodos Publicos
   return Object.freeze({
     increment: function(){
       changeBy(1);
@@ -277,56 +287,59 @@ const makeCounter = function() {
 const Counter1 = makeCounter();
 const Counter2 = makeCounter();
 
-console.log(Counter1.getValue());
+console.log(Counter1.getValue()); // 0
 
 Counter1.increment();
 Counter2.increment();
-console.log(Counter1.getValue());
+console.log(Counter1.getValue()); // 2
 
 Counter1.decrement();
-console.log(Counter1.getValue());
+console.log(Counter1.getValue()); // 1
 
-console.log(Counter2.getValue());
+console.log(Counter2.getValue()); // 0
 
 ```
 
 Outro exemplo de _Factory Functions_ mais avançado:
 ```javascript
-
+// Exemplo avançado de Factory Function
 const dataConnection = (data = {}) => {
-  const settings = data;
+  const settings = data; // Armazena os parâmetros que são passados para chamar a Factory Function
 
   return Object.freeze({
-
+    // Object.freeze evita a eliminação e a adição de propriedades, modificação do prototype, etc.
     getSettings: () => settings,
 
     modifySettings: (addData = {}) => {
       return Object.assign(settings, addData);
-
-      
+    // Adiciomos ao objeto 'settings' novas propriedades
+    // Ou modificamos o valor das existentes
     }
   });
 } 
 
 const connection = dataConnection({ ip: '127.0.0.1', port: '8080'});
+// Passo o parâmetro como um objeto
 
+console.log(connection.getSettings()); // {ip: "127.0.0.1", port: "80-80"}
+console.log(connection.getSettings().ip);// 127.0.0.1
 
-console.log(connection.getSettings());
-console.log(connection.getSettings().ip);
+connection.method = 'http'; /* Isto não funcinará!
+  Graças a 'object.freeze' não podemos acessar a propriedade do objeto
+  Só verá um erro se usar: 'use strict';
 
-connection.method = 'http';
+  connection.settings.method = 'http'; => Isso não funcionará! TypeError
 
-
-
+*/
 
 
 connection.modifySettings({ method: 'http'});
-
+// Usamos um métodos definidos no objeto para modificar os valores que contém no objeto.
 console.log(connection.getSettings());
 
-connection.modifySettings({ip: '192.168.2.11'});
-
-console.log(connection.getSettings());
+connection.modifySettings({ip: '192.168.2.11'}); 
+// Podemos sobreescrever os valores do objeto 'settings'.
+console.log(connection.getSettings()); // {ip: "192.168.2.11", port: "8080", method: "http"}
 ```
 
 ---------------------------------------------------
@@ -337,7 +350,7 @@ console.log(connection.getSettings());
 ```javascript
 class Person {
   constructor(name) {
-
+    // constructor  é um método opcional. Se a classe não tem propriedade pode ser omitido.
     this.name = name;
   }
 
@@ -348,9 +361,9 @@ class Person {
 
 let john_doe = new Person("John Doe");
 
-john_doe.greeting();
+john_doe.greeting(); // Hello, my name is John Doe
 
-console.log(john_doe instanceof Person);
+console.log(john_doe instanceof Person); 
 console.log(john_doe instanceof Object);
 
 console.log( typeof john_doe);
