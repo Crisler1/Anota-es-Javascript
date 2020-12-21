@@ -543,5 +543,146 @@ class MyES2019Class {
   incB() {
     this.#counter++;
   }
-
+  getCounter () {
+    return this.#counter
+  }
 }
+
+  let foo = new MyES2019Class();
+
+  foo.incB(); // Runs OK
+  foo.#counter = 7; // Error - private property cannot be modified outside class
+  foo.#counter; // Error - private property cannot read outside class
+  foo.counter; // undefined
+
+  foo.getCounter(); // 12
+  ```
+
+  ----------------------------------------------------------------------------------------
+
+  ## Singleton (Classe ES6):
+
+  * Exemplo de singleton pattern usando classes de ES6:
+  ```javascript
+  class Item {
+    constructor() {
+      if(!Item.instance){
+        this._data = [];
+        Item.instance = this;
+      }
+      return Object.freeze(Item.instance);
+    }
+
+    // Metódos
+    add(Item){
+      this._data.push(item);
+    }
+
+    get(id){
+      return this._data.find(d => d.id === id);
+    }
+  }
+  // Pode-se exportar esta classe como módulo:
+  module.exports = Item;
+
+  // Importe-o assim:
+  const Item = require('./Item');
+  const foo = new Item();
+
+  let first = new Item();
+  let second = new Item();
+
+  first.add({id: 1, name:'John'});
+  second.add({id: 2, name:'Louis'});
+
+  console.log(second); // [{id: 1, name: 'John'}, {id:2, name: 'Louis'}]
+
+  console.log(second.get(2)); // {id: 2, name: 'Louis'}
+
+  console.log(first === second); // true (São a mesma instância)
+  ```
+
+-----------------------------------------------------------------------
+
+## Tratamento de Arrays
+
+* Criar um array com _n_ número de posições com valor por default
+```javascript
+new Array(3).fill(0); // [0,0,0]
+```
+
+* Clonar um array
+```javascript
+
+/**
+* recursiveArrayClone() Cria um clone exato de um array. Suporta matrizes multidimensionais.
+* 
+* @code
+* console.log( recursiveArrayClone(['a', {}, [4, 0]])); // ['a', {} [4, 0]]
+* @endcode
+* 
+* @param {array} arrayToClone. O array que se quer clonar.
+* @return {array} clonedArray. Retorna um novo array.
+*/
+function recursiveArrayClone(arrayToClone){
+  let clonedArray = [];
+  for (let i = 0; i < arrayToClone.length; i++) {
+    if ( Array.isArray(arrayToClone[i])) {
+      clonedArray.push(arrayToClone[i]);
+    }
+  }
+  return clonedArray;
+} 
+```
+
+* Esvaziar um array
+```javascript
+const myArray = ['a','b','c'];
+myArray.length = 0;
+console.log(myArray); // []
+```
+
+* Retirar elementos _falsy_ de um array
+```javascript
+const myArray = [0, "0", "example", null, undefined, NaN, false];
+
+let arrayFiltered = myArray.filter(Boolean);
+console.log(arrayFiltered); // ["0", "example"]
+```
+
+* Uso de: _array.join_ (retorna uma string)
+```javascript
+let a = ['Wind', 'Rain', 'Fire'];
+a.join(); // 'Wind','Rain','Fire'
+a.join(''); // 'WindRainFire'
+
+let text = "add the potato please, I always prefer more potato" ;
+text = text.split("potato").join("cheese");
+// Substitui "potato" por "cheese" em todas as aparições que houver em "text"
+```
+* Uso de: _array.concat_ (Cria um novo array com a concatenação de 2 ou mais arrays)
+```javascript
+const arr1 = ['a','b','c'];
+const arr2 = ['d','e','f'];
+const arr3 = arr1.concat(arr2); // arr3 is a new array ['a','b','c','d','e','f']
+```
+* Uso de _array.splice_ (permite acessar ou eliminar elementos de um array. Tambem é útil para dividir um array em dois)
+```javascript
+var instruments = ['guitar', 'bass', 'keyboard'];
+instruments.splice(2,0, 'drums') // instruments = ['guitar','bass','drums','keyboard']
+
+var planets = ['Mercury','Venus','Earth','Mars','Pluto','Jupiter','Saturn','Uranus','Neptune'];
+planets.splice(4,1);
+// (sorry, Pluto) planets == ['Mercury','Venus','Earth','Mars','Jupiter','Saturn',''Uranus','Neptune'];
+
+array_example.splice(0, 0, "foo"); // Acessa "foo" na primeira posição de um array_example
+
+
+var myFish = ['Angel','Clown','Mandarin','Sturgeon',"CherubFish"];
+var removedFish = myFish.splice(2);
+console.log(myFish); //['Angel','Clown']
+console.log(removedFish); // ['Mandarin','Sturgeon','CherubFish']
+```
+
+* Uso de: _array.indexOf_(busca um determinado elemento de um array)
+```javascript
