@@ -363,14 +363,15 @@ let john_doe = new Person("John Doe");
 
 john_doe.greeting(); // Hello, my name is John Doe
 
-console.log(john_doe instanceof Person); 
-console.log(john_doe instanceof Object);
+console.log(john_doe instanceof Person); // true
+console.log(john_doe instanceof Object); // true
 
-console.log( typeof john_doe);
+console.log( typeof john_doe); // Objeto
 
-console.log( typeof Person);
-
-console.log( typeof Person.prototype.greeting);
+console.log( typeof Person); // Função!!
+// (Cuidado, poderiamos pensar que não retornará "class" porem nos retorna "function")
+console.log( typeof Person.prototype.greeting); // Função !! 
+// (Cuidado, poderiamos pensar que não retornará "method" porém nos retorna "function")
 
 ```
 
@@ -385,25 +386,25 @@ class Car {
 
   setBrand(brand){
     this.brand = brand;
-    return this;
+    return this; // Retornando this por encadeamento
   }
   setModel(model){
     this.model = model;
-    return this;
+    return this; // Retornando this por encadeamento
   }
   setColor(color){
     this.color = color;
-    return this;
+    return this; // Retornando this por encadeamento
   }
 
   getCarInfo(){
-    return this;
+    return this; // Retornando this por encadeamento
   }
 }
 
-const car = new Car('Ford', 'F-150','red').setColor('blue').setModel('Ranger');
+const car = new Car('Ford', 'F-150','red').setColor('blue').setModel('Ranger'); // Métodos encadeados
 
-console.log( car.getCarInfo());
+console.log( car.getCarInfo()); // {brand:"Ford", model:"Fiesta", color:"Purple"}
 ```
 
 * Métodos estáticos (nos permite usar esses métodos sem gerar a instância da classe):
