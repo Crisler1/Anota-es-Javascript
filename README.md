@@ -666,6 +666,15 @@ const arr1 = ['a','b','c'];
 const arr2 = ['d','e','f'];
 const arr3 = arr1.concat(arr2); // arr3 is a new array ['a','b','c','d','e','f']
 ```
+* Uso de: _array.slice_(cria uma cópia do array, porém retirando alguns elementos dos originais)
+```javascript
+var fruits = ['Banana','Orange','Lemon','Apple','Mango'];
+var citrus = fruits.slice(1, 3); // citrus == ['Orange','Lemon']
+
+
+var reduced_fruits = fruits.splice(1); // reduced_fruits == ['Orange','Lemon','Apple','Mango']
+```
+
 * Uso de _array.splice_ (permite acessar ou eliminar elementos de um array. Tambem é útil para dividir um array em dois)
 ```javascript
 var instruments = ['guitar', 'bass', 'keyboard'];
