@@ -467,3 +467,67 @@ doSomething();
 ```
 * Herança
 ```javascript
+class Rectangle {
+  constructor(len, wid) {
+    this.len = len;
+    this.wid = wid;
+  }
+
+  getArea(){
+    return this.len * this.wid;
+  }
+
+  getInfo () {
+    return 'I am a naughty rectangle';
+  }
+}
+
+class Square extends Rectangle { // Extendemos a classe
+  constructor(len){
+    super(len, len); // Invocamos ao constructor a classe pai
+
+  // Podemos fazer referencia ao metodo pai, mas não é necessário!
+  // Pode omiti-lo, ja que o método é herdado automaticamente.
+  /* 
+  getArea() {
+  return super.getArea(); // avisa que assim que invoco a um determinado metodo do pai
+
+  }
+  */
+// Sobrescrever um método
+getInfo() {
+  return 'I am a cheeky square!';
+  }
+ }
+
+let square = new Square(4);
+console.log(square.getArea()); // 16. Observa que este método foi herdado da classe pai
+
+console.log(square instanceof Square); // true
+console.log(square instanceof Rectangle); // true. Lembre-se que Square extende a classe Rectangle
+
+console.log(square.getInfo()); // I am a cheeky square!
+```
+
+------------------------------------------
+
+## Classes em  ES2019
+
+* exemplo de classe em ES2019:
+```javascript
+// Node.js 12.4 required
+
+class MyES2019Class {
+  // Não é necessário o constructor para declarar as propriedades públicas (porém podem usar se necessário).
+
+  x = 1; // public property
+
+  #counter = 0; // private property
+
+  static z = 3; // static property
+
+  incB() {
+    this.#counter++;
+  }
+
+}
