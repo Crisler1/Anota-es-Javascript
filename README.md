@@ -748,3 +748,36 @@ console.log(totalOfTrues); // 3
 
 --------------------------------------------------------------------
 ## Tratamento de Strings:
+
+
+* Uso de: _string.match_ (cria um array apartir de comparar uma string com uma regular expression)
+```javascript
+var str = "The rain in SPAIN stays mainly in the plain";
+var res = str.match(/ain/gi); // ["ain","AIN","ain","ain"]
+
+var text = "The phone number is 93 555 22 33";
+var result = text.match(/\d+/); // ["93"]
+var allResults = text.match(/\d+/g); // allResults is ["93", "555", "22", "33"]
+var numberOfResults = text.match(/\d+/g).lenght; // 4
+
+var text = "<p> Hello {{name}}, you are {{age}} years old. </p>";
+var extract = text.match(/\{\{(.+?)\}\}/g);
+console.log(extract); // ["{{name}}","{{age}}"]
+```
+
+* Diferenças entre _string.substr_ e _string.substring_ (ambos métodos retornam uma nova string apartir do original,
+porém observa a diferença dos resultados):
+```javascript
+var text = "example";
+console.log(text.substr(1,5)); // "xampl"
+// (a partir do indice dado, retorna tantos caracteres quanto aponte no segundo parâmetro)
+
+
+console.log(text.substring(1,5)); // "xamp"
+// (a partir do índice dado, retorna caracteres apartir de outro indice dado)
+```
+
+* Uso de: _string.split_ (genera um novo array apartir de cortar uma string pelo parâmetro indicado):
+```javascript
+var array_of_words = "A new car".split(" ");
+console.log(array)
