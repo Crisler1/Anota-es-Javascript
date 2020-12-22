@@ -695,3 +695,56 @@ console.log(removedFish); // ['Mandarin','Sturgeon','CherubFish']
 
 * Uso de: _array.indexOf_(busca um determinado elemento de um array)
 ```javascript
+var a = ['foo','bar','biz'];
+a.indexOf('bar'); // 1
+a.indexOf('NyanCat'); // -11
+
+if (a.indexOf('NyanCat') === -1) {
+  // element doesn't exists in array
+}
+```
+
+* Uso de: _array.filter_ (cria um novo array apartir de outro com aqueles elementos que passam um filtro especificado)
+```javascript
+function isBigEnough(value) {
+  return >= 10;
+}
+
+const numbers = [12, 5, 8, 130, 44];
+
+const filteredNumbers = numbers.filter(isBigEnough); // filteredNumbers is [12, 130, 44]
+```
+
+* Uso de: _array.forEach_ (recorre ao array aplicando uma função a cada elemento)
+```javascript
+var a = ['a','b','c'];
+a.forEach(function(element){
+  console.log(element);
+});
+
+// Outra maneira de implementa-lo:
+function fooFunction(currentValue,index,array) {
+  //...
+}
+a.forEach(fooFunction, this); // Podemos nomear a função em vez de declarar dentro do forEach().
+// Ocasionalmente, podemos passar o objeto 'this' a função.
+```
+
+* Uso de: _array.reduce_ (aplica uma função a um acumulador e a cada valor de um array(de esquerda a direita) para reduzir-lo a um único valor.)
+```javascript
+const cart = [{ref:'yuh',price: 23,},{ref:'jum',price: 44}];
+const result = cart.reduce(function(accum, v){
+  return accum + v.price;
+},0); // Neste caso, e 0 é o acumulador.
+console.log(result); // 67
+
+const arrayOfBooleans = [true,false,true,true];
+const totalOfTrues = arrayOfBooleans.reduce(function(accumulator, arrayElement){
+  return arrayElement ? ++accumulator : accumulator;
+},0
+);
+console.log(totalOfTrues); // 3
+```
+
+--------------------------------------------------------------------
+## Tratamento de Strings:
