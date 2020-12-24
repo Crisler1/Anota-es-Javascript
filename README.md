@@ -856,4 +856,154 @@ console.log(arrayFromObject.length);* // 2
 console.log(arrayFromObject[1]); // 'foo'
 ```
 
-*
+* Clonar um objeto:
+```javascript
+function deepClone(originalObject) {
+  const clonedObject = {};
+  for (let key in originalObject) {
+    if (typeof (originalObject[key] != 'object') {
+      clonedObject[key] = originalObject[key];
+    })
+  } else {
+    clonedObject[key] = deepClone(originalObject[key]);
+  }
+}
+  return clonedObject;
+}
+
+const newObject = deepClone(originalObject);
+
+
+// Método alternativo:
+const obj = {a: 1};
+const copy = Object.assign({}, obj);
+console.log(copy); // {a: 1}
+```
+
+
+* Iterar um objeto:
+```javascript
+const obj = {
+  id: 1, 
+  name: "gowthan",
+  active: true
+}
+
+for (let key in obj) {
+  if(obj.hasOwnProperty(key)){
+    console.log(`${key} : ${obj[key]}`) // "name: gowtham" na segunda iteração. 
+  }
+}
+//  Nota: Utiliza "hasOwnProperty()" para garantir que iteramos so as propriedades do objeto, já que um "for in" tambem poderia iterar sobre propriedades aninhadas do prototype
+
+// Outra opção!
+Object.keys(obj).forEach(key => {
+  console.log(`${key} : ${obj[key]}`);
+});
+
+// Si só nos interessam os valores
+Object.values(obj).forEach(key => {
+  console.log(value);
+});
+
+// Isto inclue as propriedades não enumeráveis
+
+Object.getOwnPropertyNames(obj).forEach(key => {
+  console.log(`${key} : ${obj[key]}`);
+});
+```
+
+* Cria um objeto literal apartir dos parâmetros de uma URL:
+```javascript
+// On this URL: https: //example.com/index.php?foo=foo&bar=bar
+
+Object.fromEntries([...new URL(location).searchParams]); // {foo: "foo", bar: "bar"}
+```
+
+----------------------------------------------------------------------------
+
+
+## Namespaces:
+
+Podemos agrupar funções e valores em um namespace. Isto nos permite organizar melhor nosso código. Existem diferentes maneiras de obter este resultado, uma delas é usar namespaces
+
+* Namespaces com objetos literais:
+```javascript
+const myApplication = {
+  version: '1.0',
+  name: 'my aplication',
+  config: {
+    url: '127.0.0.1', 
+    port: 3000
+  },
+  init: function() {
+    // ....
+  }
+};
+```
+
+* Namespaces com IIFE (immediatly invoked function expression):
+```javascript
+const myApplication = {};
+
+(function(){
+  let _protocol = 'https'; // Isso é uma variável "privada", não é acessível fora do escopo.
+
+this.version = '1.2',
+this.name = 'my application',
+this.config = {
+  url: '127.0.0.1',
+  port: 3000,
+  protocol: _protocol
+},
+this.init = function() {
+  //...
+}
+}).apply(myApplication);
+```
+
+---------------------------------------------------------
+
+## Closures
+
+* Podemos usar closures para organizar nosso código. Um simples exemplo com IIFE functions que nos permite  criar um "módulo", uma interessante
+alternativa a um namespace:
+```javascript
+const geoModule = (function() {
+  const _pi = 3.141592; // Propriedade Privada
+  const _info = 'This is a module for doing geometrical calculations';
+  
+  const circleArea = (radius) => {
+    if (!Number(radius)) throw new Error('You must provide a radius value');
+
+    return _pi * radius * radius;
+  };
+
+  // Definimos que métodos e propriédades são acessíveis publicamente
+  return Object.freeze({
+    calculateCircleArea: circleArea,
+    information: _info
+  })
+})();
+
+geoModule.calculateCircleArea(5); // 78.5398
+geoModule.information; // 'This is a module for doing geometrical calculations'
+```
+
+------------------------------------------------------------
+
+## Proxies:
+O objeto proxy é usado para definir um comportamento personalizado para operações fundamentais (por exemplo, para observar propriedades,
+quando se assinam, enumeração, invocação de funções e etc)
+
+* Exemplo de uso básico de proxies:
+```javascript
+let product;
+
+(function() {
+  let _price = 0;
+
+  product = {};
+
+  //
+})
