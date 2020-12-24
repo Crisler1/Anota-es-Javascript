@@ -780,4 +780,34 @@ console.log(text.substring(1,5)); // "xamp"
 * Uso de: _string.split_ (genera um novo array apartir de cortar uma string pelo parâmetro indicado):
 ```javascript
 var array_of_words = "A new car".split(" ");
-console.log(array)
+console.log(array_of_words) ; // ["A", "new", "car"]
+
+console.log("hello".split("")); // ["h","e","l","l","o"]
+
+var text = "Add the potato please, I always prefer more potato";
+text = text.split("potato").join("cheese");
+// Substitui "potato" por "cheese" em todas as aparições que há "text"
+```
+
+------------------------------------------------------------
+
+## Regular Expression
+
+* Uso de: _regexObj.search_ (retorna um booleano se encontra uma coincidencia na string dado)
+
+```javascript
+var str = "The best things in life are free";
+var pattern = new RegExp(/life/g);
+var res = pattern.test(str); // true
+```
+-------------------------------------------------------------
+
+## objetos:
+
+* Contexto the _this_:
+```javascript
+var biz = {
+  name: "Crisler",
+  "second-name": "Wintler"
+
+}
