@@ -808,6 +808,52 @@ var res = pattern.test(str); // true
 ```javascript
 var biz = {
   name: "Crisler",
-  "second-name": "Wintler"
+  "full-Name": "Crisler Wintler" // Compilado contendo um hífen
 
+
+// error, "this" aponta para um objeto global:
+greetings: 'Hello, I am' + this.name,
+ 
+// correto, "this" aponta a "biz":
+
+introduce: function(){
+  return 'My name is' + this.name;
 }
+get FullName() { return this["fullName"]}
+}
+
+console.log(biz.greetings); // 'Hello, I am undefined'
+console.log(biz.introduce()) ; // 'My name is Crisler'
+
+console.log(biz.full-name); // Error!
+console.log(biz["full-name"]); "Crisler Wintler"
+
+delete biz["full-name"]; // Sempre retorna true! Inclusive quando existe a propriedade apagar
+```
+
+* Obter um array a partir das propriedades de um objeto:
+```javascript
+var foo = {
+  name: 'Crisler',
+  nick: 'Bear'
+}
+
+var arrayOfProperties = Object.keys(foo);
+console.log(arrayOfProperties); ['name', 'nick']
+```
+
+* Criar um array apartir de um objeto:
+```javascript
+var biz = {
+  length: 2,
+  '0': 'biz',
+  '1': 'foo'
+}
+
+var arrayFromObject = Array.prototype.slice.call(biz);
+console.log(arrayFromObject); // ['biz','foo']
+console.log(arrayFromObject.length);* // 2
+console.log(arrayFromObject[1]); // 'foo'
+```
+
+*
