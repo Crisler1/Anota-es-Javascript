@@ -1005,5 +1005,101 @@ let product;
 
   product = {};
 
-  //
-})
+  // Podemos definir alguns proxies para acessar a propriedade 'price'.
+  // Os proxies são muito úteis para fazer validações. Por exemplo, no método 'set'. Neste caso, estamos "interceptando" o acesso a leitura e escritura da propriedade 'price'.
+  Object.defineProperty(product, 'price', {
+    set: function (price) {
+      _price = price;
+    },
+
+    get: function (){
+      return _price;
+    }
+  });
+})();
+
+product.price = 100; // ao fazer isso, acionamos o proxie 'set'
+
+// Na seguinte linha, acionamos o proxie 'get'
+console.log(product.price) // 100
+```
+---------------------------------------------------------------
+
+## Set:
+
+* Exemplo básico de _set_:
+```javascript
+const set = new Set([1, 2, 3, 4, 5]);
+// Armazena valores únicos de qualquer tipo, inclusive valores primitivos ou objetos de referência.
+// Se forma apartir de um objeto iterável. Pode criar vazio passando null.
+
+set.has(4); // 
+set.has('4'); // false. Não foi armazenado em uma string, se não é um inteiro.
+
+set.delete(5); // truques
+
+set.add('foo'); // {1, 2, 3, 4, "foo"}
+const s = new Set([{a:1},{b:2},{a:1}]);
+console.log(s); // {{a:1},{b:2},{a:1}}
+// Observa que neste caso parece existir um objeto duplicado, na realidade são objetos distintos!
+
+console.log(s.size); // 3
+
+s.clear(); // Vazia de elementos no set
+```
+
+* Descompor strings usando _set_ (lembre que não permite valores duplicados):
+```javascript
+let mySet = new Set('foooooooooooo');
+// Isto acontece por que estamos passando um valor iterável(neste caso uma string)
+console.log(mySet); // {"f", "o"}
+
+for (let i of mySet) {
+  console.log(i);
+} // Uma maneira de iterar um set
+
+mySet.forEach(i => console.log(i)); // Outra maneira de iterar um set.
+// Observe, não funcionam: filter, map e reduce.
+// Porém podem transforma-lo em um array para usar estes métodos assim: [...mySet]
+```
+
+* Eliminar elementos duplicados em um array mediante _set_ e _spread_ operator:
+```javascript 
+let nums = [1, 2, 2, 2, 2, 3, 4];
+function deleteDuplicated(items) {
+  return [... new Set(items)]; // retorna um array
+}
+console.log( deleteDuplicated(nums)); // [1, 2, 3, 4]
+```
+------------------------------------------------------------
+
+## Map:
+
+* Primeiros passos com _map_:
+```javascript
+const biz = new Map();
+biz.set('name', 'John');
+biz.set('age', 53);
+
+console.log(biz.size); // 22
+
+for (let [key, value] of biz) {
+  console.log(`${key} => ${value}`);
+  // name => John
+  // age => 53
+}
+
+console.log(biz.get('age')); // 53
+
+biz.delete('age'); // true
+console.log(biz) // {"name" => "John"}
+
+biz.clear(); // {}
+```
+
+* Mais opções interessantes com _map_:
+```javascript
+const biz = new Map([ ['name','John'],['Surname', 'Doe'], [undefined, null]]);
+
+console.log(biz.has('name')); // true
+console.log(biz.has('Give me a cookie')); // false
