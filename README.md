@@ -1103,3 +1103,22 @@ const biz = new Map([ ['name','John'],['Surname', 'Doe'], [undefined, null]]);
 
 console.log(biz.has('name')); // true
 console.log(biz.has('Give me a cookie')); // false
+
+console.log(biz) // {"name" => "John", "Surname" => "Doe"}
+```
+
+--------------------------------------------------------------------
+
+## Debugging e Console:
+
+* O uso do comando _debugger_ (estabelece um "breakpoint" no código):
+```javascript
+// some code...
+debugger;
+// some code...
+```
+
+* A propriedade _table_ do objeto _console_ (retorna uma tabela apartir de um objeto ou um array)
+```javascript
+
+ 
