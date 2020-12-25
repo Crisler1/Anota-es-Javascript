@@ -1213,6 +1213,71 @@ console.log( whatTypeIs(null); // "Null"
 console.log( whatTypeIs(undefined)); // "Undefined"
 console.log( whatTypeIs(NaN)); // "Number"
 console.log( whatTypeIs(new Date)); // "Date"
+```
 
+* JSON*.stringfy fáceis de ler. Pode ser usado o terceiro parâmetro para especificar o tipo de indentação:
+```javascript
+const person = {firstname: "John", lastName:"Doe", age:34};
 
+JSON.stringfy(person, null, 2); // Indentação dos espaços
+/*
+{
+  "firstname": "John",
+   "lastName":"Doe", 
+  "age":34
+}
+*/
+
+JSON.stringfy(person, null, '\t'); // Indentação: tabulador
+/*
+{
+  "firstname": "John",
+  "lastName": "Doe",
+  "age": 34 
+}
+*/
+```
+* Revisar o código de uma função:
+```javascript
+function someFunction(){ 
+  // ...
+}
+console.log( someFunction.toString());
+```
+
+* Utiliza-se isso no console do navegador para debuggar o CSS:
+```javascript
+$$('*').forEach((el) => el.style.border = '1px solid red');
+```
+
+---------------------------------------------------------------------
  
+ ## De callback a promisses:
+ ```javascript
+ function justAsyncFunction(str, cb){
+   // Isso só simula ser algo assíncrono
+   setTimeOut(function(){
+     if(!str){
+       cb({ok: false});
+     } else {
+       cb({
+         ok: true,
+         users: ['john', 'jack']
+       });
+     }
+   }, 2000);
+ }
+
+ function retrieveUsers(cb) {
+   // Típico exemplo de aninhamento de funções que contem callback (callback hell)
+   justAnAsyncFunction('SELECT * FROM users', function(results){
+     if(results.ok) {
+       cb(results.users);
+     } else {
+       cb('Error');
+     }
+   });
+ }
+retrieveUsers(console.log); // retorna ["john", "jack"] depois de dois segundos.
+
+//  Agora veja como reescrever a função "retrieveUsers" convertendo a em promisse
