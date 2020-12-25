@@ -1104,12 +1104,22 @@ const biz = new Map([ ['name','John'],['Surname', 'Doe'], [undefined, null]]);
 console.log(biz.has('name')); // true
 console.log(biz.has('Give me a cookie')); // false
 
+console.log(biz) // {"name" => "John", "Surname" => "Doe", undefined => undefined }
+
+const arrayOfKeys = Array.from(biz.keys()); // ["name","Surname", undefined]
+
+biz.forEach( value, key, originalMap) => {
+  if(value === null) {
+    originalMap.delete(key);
+  }
+});
 console.log(biz) // {"name" => "John", "Surname" => "Doe"}
+biz.set('name', 'Maria') // {"name" => "Maria", "Surname" => "Doe"}
 ```
 
 --------------------------------------------------------------------
 
-## Debugging e Console:
+## Debugging e Console: 
 
 * O uso do comando _debugger_ (estabelece um "breakpoint" no código):
 ```javascript
@@ -1120,5 +1130,89 @@ debugger;
 
 * A propriedade _table_ do objeto _console_ (retorna uma tabela apartir de um objeto ou um array)
 ```javascript
+var person = {
+  firstname: "John", lastName:"Doe", age: 50 };
+console.table({person});
+```
+* Destruturando no _console.log_
+```javascript
+let person = { firstName:"John", lastName:"Doe", age:34};
+console.log({person});
+```
+
+* Uso de _console.group()_ e _console.groupEnd()_ em rotações:
+```javascript
+for(var i = 0; i < 2; i++) {
+  console.group("Primeiro nivel:" i);
+  for (var k = 0; k < 2; k++){
+    console.group("Segundo nivel: ", k);
+
+    // Your code
+    console.log("Value of i: " + i);
+    console.log("Value of k: " + k);
+    
+    console.groupEnd();
+  }
+
+  console.groupEnd();
+}
+```
+* Uso de _console.trace()_ para ver a stack:
+```javascript
+  function foo() { 
+    function biz(txt){
+      console.trace(txt)
+    }
+    biz('example');
+  }
+  foo();
+
+  // 'example'
+  // biz @..;
+  // foo @...;
+  ```
+
+  * Uso de _console.log_ com estilização CSS:
+  ```javascript
+  var foo = "Awesome";
+  console.log('%c' + foo, 'color: yellow; background-color: black;');
+  ```
+* Uso de _console.time()_ para medir o tempo de execução:
+```javascript
+console.time('Timer A');
+
+for (let i = 0; i < 999999; i++) {
+  // Para ter uma medição fiél; talvez necessite usar um rotacionador para maximizar os resultados
+}
+
+console.log('Timer A')
+
+let i = 0
+while(i < 999999; ) {
+  i++;
+}
+
+console.timeEnd('Timer A');
+// Timer A: 4.47607421875ms
+// Timer A: 9.0048828125ms
+```
+
+* Um pequeno truque para saber com qual tipo de objeto estamos trabalhando:
+```javascript 
+function whatTypeIs(element){
+  return Object.prototype.toString.call(element).slice(8, -1);
+}
+
+console.log( whatTypeIs( ["A","B"])); // "Array"
+console.log( whatTypeIs("foo")); // "String"
+console.log( whatTypeIs( 4 )); // "Number"
+console.log( whatTypeIs(/[a]/g)) ; // "RegExp"
+console.log( whatTypeIs(new set())) ; // "Set"
+console.log( whatTypeIs(()=> {})); // "Function"
+console.log( whatTypeIs(null); // "Null"
+console.log( whatTypeIs(undefined)); // "Undefined"
+console.log( whatTypeIs(NaN)); // "Number"
+console.log( whatTypeIs(new Date)); // "Date"
+
 
  
