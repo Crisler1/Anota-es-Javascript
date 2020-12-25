@@ -1281,3 +1281,186 @@ $$('*').forEach((el) => el.style.border = '1px solid red');
 retrieveUsers(console.log); // retorna ["john", "jack"] depois de dois segundos.
 
 //  Agora veja como reescrever a função "retrieveUsers" convertendo a em promisse
+function retrieveUsers_promisefy(){(
+  return new Promise ((resolve, reject) => {
+    justAnAsyncFunction('SELECT * FROM users', function(results) {
+      if(results.ok) {
+        resolve( results.users);
+      } else {
+        reject (new Error('Error'));
+      }
+    });
+  });
+}
+
+// Isso nos permite ligar para ela e interagir com ela como uma promisse!
+function getUserPromises(cb) {
+  return retrieveUsers_promisify()
+  .then((results) => {
+    cb(results);
+  })
+  .catch((error) => {
+    console.error(error.message);
+  });
+}
+
+getUserUsingPromises(console.log); // Isto é uma promisse que demora dois segundos para retornar o resultado: ["john", "jack"]
+
+console.log(await retrieveUsers_promisify()); // Eu também posso fazer isso! Cuidado, aqui estou interrompendo a execução até que o código assíncrono termine de ser executado
+```
+----------------------------------------------------------------------------------
+## Promises:
+
+* Exemplo de uma cadeia de promises em que a primeira fornece os dados para que a segunda possa ser executada:
+```javascript
+const runAsyncFunctions = async () => {
+  const users = await getUsers(); // Isto retornará um array
+
+  Promise.all(
+    users.map(async user => {
+      const userId = await getIdFromUser(user);
+
+      const capitalizedId = await capitalizeIds(userId);
+    })
+  );
+}
+runAsyncFunctions(); // Isso é uma promisse
+```
+----------------------------------------------------------------------------------
+
+## Async-Await:
+
+Recorda que _async_ cria uma promise.
+
+* Uso de _async-await_:
+```javascript
+// Exemplo 1: 
+async function cooking(){
+  const a = await obtainIngredientA();
+  const b = await obtainIngredientB();
+  const recipe = await newRecipe(a,b);
+  return recipe;
+} // async converte esta função em uma promisses
+
+cooking().then((result) => {
+  console.log(result);
+}).catch((e)=> {
+  // if 'cooking' function or 'then' method throw an error...
+  console.error(e.message);
+});
+
+// Exemplo 2:
+const getIngredients = async () => {
+  try {
+    const butter = await getButter();
+    const flour = await getFlour();
+    const sugar = await getSugar();
+    const eggs = await getEggs();
+    return [
+      butter,
+      flour, 
+      sugar,
+      eggs,
+    ];
+  } catch (e) {
+    return e;
+  }
+}
+
+getIngredients().then((result) => {
+  if (result instanceof Error) {
+    // if 'getIngredients' function throw an error...
+    console.error(result.message);
+  }
+  // ...
+}).catch((e) => {
+  // if 'then' method throw an error...
+  console.error(e.message)
+});
+
+// Exemplo 3:
+const to = (promise) => {
+  return promise.then((data) => [null, data]).catch((err) => [err]);
+};
+
+async function getDataFromAsyncCode() {
+  const [err, response] = await to (justAsyncFunction());
+  if (err) throw new Error(`Error ${err}`);
+  return response;
+}
+
+getDataFromAsyncCode(); // Isto é uma promise. Deve tratar os resultados com 'then()' e 'catch()';
+
+// Tambem pode fazer isso:
+console.log(await getDataFromAsyncCode()); // Observe, você esta parando a execução do código
+
+
+// Exemplo 4: 
+// Traditional promise chaining
+getIssue()
+.then(issue => getOwner(owner.ownerId))
+.then(owner => sendEmail(owner.email, 'Some text'));
+
+// Using async functions! (Considere agrupá-lo em uma função assíncrona se não quiser interromper a execução do script)
+const issue = await getIssue();
+const owner = await getOwner(issue.ownerId);
+await sendEmail(owner.email, 'Some text');
+
+// Exemplo 5:
+async function foo (things) {
+  const listOfpromises = [];
+  for (let thing of things) { // use "for ... of" in arrays sets; use "for ... in" in objects
+  // good: all asynchronous operations are inmediately started
+  listOfpromises.push( asyncFooFunctions(thing) );
+
+  // now that all the asynchronous operations are running, here we wait until they all complete
+  return await Promise.all(listOfpromises);
+  } 
+
+  // Exemplo 6 (chamadas assíncronas em paralelo):(
+  async function parallelApiCalls() {
+    const [first, secondResult] = await Promise.all([fetchFirst(), fetchSecond()]); // se um falhar, não se espera que complete o resto
+  }
+}
+```
+
+* Averiguar se uma função é assíncrona (async):
+```javascript
+const isAsync = fooFunction.constructor.name === "AsyncFunction";
+```
+
+----------------------------------------------------------------------------------
+
+## setTimeout:
+
+* Truque para executar um código no momento e repetir sua execução periodicamente:
+```javascript
+(function loop() {
+  // ... Your code!
+  setTimeout(loop, 2000);
+})();
+
+// Você tambem pode fazer isso: 
+(async function loop () {
+  // ... Your code!
+  await foo ();
+  setTimeout(loop, 2000);
+})();
+```
+----------------------------------------------------------------------------------
+
+# DOM:
+* Trabalhando com o DOM:
+```javascript
+
+// Seletores
+document.querySelector('.foo') // Obtenha o primeiro elemento dentro do documento que corresponde ao seletor
+document.querySelector('.foo') // Obter uma lista de elementos
+
+// Outros seletores
+const biz = document.querySelector('.biz');
+const children = biz.childNodes; // Obter os filhos do nó
+const parent = biz.parentNode; // Obter o pai do nó
+
+biz.classList.add('.is-active'); // Acessar a classe de um elementos
+bis.classList.remove('.hidden') // Excluir uma classe de elemento
