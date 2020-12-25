@@ -1463,4 +1463,17 @@ const children = biz.childNodes; // Obter os filhos do nó
 const parent = biz.parentNode; // Obter o pai do nó
 
 biz.classList.add('.is-active'); // Acessar a classe de um elementos
-bis.classList.remove('.hidden') // Excluir uma classe de elemento
+bis.classList.remove('.hidden');// Excluir uma classe de elemento
+biz.classList.toggle('.dark-mode'); // Alternar a classe de um elemento
+biz.classList.contains('.black-text'); // Comprovar se um elemento tem classes
+
+// Criar um elemento e insertar ele no DOM
+const newChildElement = document.createElement('p');
+const newChildElement.innerText = "Example!";
+biz.appendChild(newChildElement);
+
+// Eliminar um nó do DOM
+biz.remove()
+```
+---------------------------------------------------------------------------------
+
